@@ -39,7 +39,11 @@ public class AzamonEstado {
 		        return ((Integer)p1.getPrioridad()).compareTo((Integer)p2.getPrioridad());
 		    }
 		});
+		
+		
 		ArrayList<Boolean> asignados = new ArrayList<Boolean>(paq.size());
+		for (int i = 0; i < paq.size(); i++) asignados.add(false);
+		
 		int npaq = 0;
 		for (int j = 0; j < 3; j++) {
 			for(int i = 0; i < trans.size(); i++) {
@@ -51,33 +55,69 @@ public class AzamonEstado {
 							}
 						}
 				}
+				if (j == 1 && trans.get(i).getDias() <= 3) {
+					while (capActual.get(i) > trans.get(i).getPesomax()) {
+						if(!asignados.get(npaq)) {
+							asignacion.set(npaq, i);
+							asignados.set(npaq, false);
+						}
+					}
+				}
+				
+				if (j == 2 && trans.get(i).getDias() <= 5) {
+					while (capActual.get(i) > trans.get(i).getPesomax()) {
+						if(!asignados.get(npaq)) {
+							asignacion.set(npaq, i);
+							asignados.set(npaq, false);
+						}
+					}
+				}
 				
 				
 			}
 		}
 	}
 
-	public void moverPaquete (int p, int o) {
-		asignacion.set(p, o);
+	public boolean moverPaquete (int p, int o) {
+		if (capActual.get(o)+paq.get(p).getPeso() <= trans.get(o).getPesomax()) {
+			capActual.set(o, capActual.get(o)+paq.get(p).getPeso());
+			asignacion.set(p, o);
+			return true;
+		}
+		return false;
 		//p -> id paquete en Paquetes, o -> id oferta en Transporte
 		
 	}
 	
-	public void permutarPaquetes (int p1, int p2) {
-		int o;
-		o = asignacion.get(p1);
-		asignacion.set(p1, asignacion.get(p2));
-		asignacion.set(p2, o);
+	public boolean permutarPaquetes (int p1, int p2) {
+		int o1 = asignacion.get(p1);
+		int o2 = asignacion.get(p2);
+		if (capActual.get(o1)+paq.get(p2).getPeso()-paq.get(p1).getPeso() <= trans.get(o1).getPesomax()
+				&& capActual.get(o2)+paq.get(p1).getPeso()-paq.get(p2).getPeso() <= trans.get(o2).getPesomax()) {
+			capActual.set(o1, capActual.get(o1)+paq.get(p2).getPeso()-paq.get(p1).getPeso());
+					capActual.set(o2, capActual.get(o2)+paq.get(p1).getPeso()-paq.get(p2).getPeso());
+			asignacion.set(p1, o2);
+			asignacion.set(p2, o1);
+			return true;
+		}
+		return false;
 		//p1/p2 -> id paquete p1/p2 en Paquetes
-		
 	}
 	
-	public void anadirPaquete (int p, int o) {
-		asignacion.set(p, o);
+	public boolean anadirPaquete (int p, int o) {
+		if (capActual.get(o)+paq.get(p).getPeso() <= trans.get(o).getPesomax()) {
+			capActual.set(o, capActual.get(o)+paq.get(p).getPeso());
+			asignacion.set(p, o);
+			return true;
+		}
+		return false;
 	}
 	
 	public void quitarPaquete (int p) {
+		int o = asignacion.get(p);
+		capActual.set(o, capActual.get(o)-paq.get(p).getPeso());
 		asignacion.set(p, -1);
+		
 	}
 	
 	public int hashFunction() {
@@ -89,7 +129,17 @@ public class AzamonEstado {
 	}
 	
 	public String toString() {
-		return "Estado";
+		String resultado = "";
+		resultado.concat("Asignación: \n");
+		for (int i = 0; i < asignacion.size(); i++) {
+			resultado.concat("Paquete "+i+": "+paq.get(i).getPeso()+"kg/PR"+paq.get(i).getPrioridad());
+			resultado.concat(" - Oferta "+asignacion.get(i)+"\n");
+		}
+		resultado.concat("Ofertas: \n");
+		for (int i = 0; i < trans.size(); i++) {		
+			resultado.concat("Oferta "+i+": "+trans.get(i).getDias()+" días, "+capActual.get(i)+"/"+trans.get(i).getPesomax()+"kg, "+trans.get(i).getPrecio()+" €/kg \n");
+		}
+		return resultado;
 	}
 	
 	public double getCapActualOferta(int i) {
