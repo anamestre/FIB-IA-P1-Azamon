@@ -130,16 +130,17 @@ public class AzamonEstado {
 	
 	public String toString() {
 		String resultado = "";
-		resultado.concat("Asignación: \n");
+		System.out.println("Asignación: \n");
 		for (int i = 0; i < asignacion.size(); i++) {
-			resultado.concat("Paquete "+i+": "+paq.get(i).getPeso()+"kg/PR"+paq.get(i).getPrioridad());
-			resultado.concat(" - Oferta "+asignacion.get(i)+"\n");
+			System.out.println("Paquete "+i+": "+paq.get(i).getPeso()+"kg/PR"+paq.get(i).getPrioridad());
+			System.out.println(" - Oferta "+asignacion.get(i)+"\n");
 		}
-		resultado.concat("Ofertas: \n");
+		System.out.println("Ofertas: \n");
 		for (int i = 0; i < trans.size(); i++) {		
-			resultado.concat("Oferta "+i+": "+trans.get(i).getDias()+" días, "+capActual.get(i)+"/"+trans.get(i).getPesomax()+"kg, "+trans.get(i).getPrecio()+" €/kg \n");
+			System.out.println("Oferta "+i+": "+trans.get(i).getDias()+" días, "+capActual.get(i)+"/"+trans.get(i).getPesomax()+"kg, "+trans.get(i).getPrecio()+" €/kg \n");
 		}
 		return resultado;
+		//GRAN CHAPUZA. ARREGLAR PER FER UN TOSTRING DIGNE
 	}
 	
 	public double getCapActualOferta(int i) {

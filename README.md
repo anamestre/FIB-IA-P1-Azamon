@@ -1,5 +1,11 @@
 # Azamon
 
--Acabar estat + operadors
+## To do
 
--Classe Problem amb generació de l'estat inicial
+*Arreglar generació de la solució inicial 1
+
+*Fer generació de la solució inicial 2
+
+*Començar a implementar classes de l'AIMA
+
+*Arreglar el toString() d'AzamonEstado
