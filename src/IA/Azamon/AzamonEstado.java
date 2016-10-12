@@ -1,7 +1,6 @@
 package IA.Azamon;
 import java.util.*;
 
-
 public class AzamonEstado {
 
 	//Atributos
@@ -28,10 +27,7 @@ public class AzamonEstado {
 	public boolean isGoalState() {
 		return false;
 	}
-	
-	
-	
-	
+
 	public void generaSolInicial1() {
 		Collections.sort(paq, new Comparator<Paquete>() {
 		    @Override
@@ -46,35 +42,53 @@ public class AzamonEstado {
 		
 		int npaq = 0;
 		for (int j = 0; j < 3; j++) {
+
+            System.out.println("Pasada "+j+"\n");
+
 			for(int i = 0; i < trans.size(); i++) {
+
+                System.out.println("Oferta "+i+"\n");
+
 				if (j == 0 && trans.get(i).getDias() == 1) {
-						while (capActual.get(i) > trans.get(i).getPesomax()) {
-							if(!asignados.get(npaq)) {
-								asignacion.set(npaq, i);
-								asignados.set(npaq, false);
-							}
-						}
-				}
+
+                    while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size()) {
+                        if (!asignados.get(npaq) && capActual.get(i)+paq.get(npaq).getPeso() <= trans.get(i).getPesomax()) {
+                            asignacion.set(npaq, i);
+                            asignados.set(npaq, true);
+                            capActual.set(i, capActual.get(i)+paq.get(npaq).getPeso());
+                            //System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
+                        }
+                        //else System.out.println("Paquete ya asignado :) \n");
+                    }
+                }
 				if (j == 1 && trans.get(i).getDias() <= 3) {
-					while (capActual.get(i) > trans.get(i).getPesomax()) {
-						if(!asignados.get(npaq)) {
+					while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size()) {
+						if(!asignados.get(npaq) && capActual.get(i)+paq.get(npaq).getPeso() <= trans.get(i).getPesomax()) {
 							asignacion.set(npaq, i);
-							asignados.set(npaq, false);
+							asignados.set(npaq, true);
+                            capActual.set(i, capActual.get(i)+paq.get(npaq).getPeso());
+                           // System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
 						}
+                        npaq++;
+                        //else System.out.println("Paquete ya asignado :) \n");
 					}
 				}
 				
 				if (j == 2 && trans.get(i).getDias() <= 5) {
-					while (capActual.get(i) > trans.get(i).getPesomax()) {
-						if(!asignados.get(npaq)) {
-							asignacion.set(npaq, i);
-							asignados.set(npaq, false);
-						}
-					}
-				}
-				
+                    while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size()) {
+                        if (!asignados.get(npaq) && capActual.get(i)+paq.get(npaq).getPeso() <= trans.get(i).getPesomax()) {
+                            asignacion.set(npaq, i);
+                            asignados.set(npaq, true);
+                            capActual.set(i, capActual.get(i)+paq.get(npaq).getPeso());
+                            //System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
+                        }
+                        npaq++;
+                        //else System.out.println("Paquete ya asignado :) \n");
+                    }
+                }
 				
 			}
+            npaq = 0;
 		}
 	}
 
@@ -129,18 +143,17 @@ public class AzamonEstado {
 	}
 	
 	public String toString() {
-		String resultado = "";
-		System.out.println("Asignación: \n");
+		StringBuffer resultado = new StringBuffer();
+		resultado.append("Asignación: \n");
 		for (int i = 0; i < asignacion.size(); i++) {
-			System.out.println("Paquete "+i+": "+paq.get(i).getPeso()+"kg/PR"+paq.get(i).getPrioridad());
-			System.out.println(" - Oferta "+asignacion.get(i)+"\n");
+			resultado.append("Paquete "+i+": "+paq.get(i).getPeso()+"kg/PR"+paq.get(i).getPrioridad());
+			resultado.append(" - Oferta "+asignacion.get(i)+"\n");
 		}
-		System.out.println("Ofertas: \n");
-		for (int i = 0; i < trans.size(); i++) {		
-			System.out.println("Oferta "+i+": "+trans.get(i).getDias()+" días, "+capActual.get(i)+"/"+trans.get(i).getPesomax()+"kg, "+trans.get(i).getPrecio()+" €/kg \n");
+		resultado.append("Ofertas: \n");
+		for (int i = 0; i < trans.size(); i++) {
+			resultado.append("Oferta " + i + ": " + trans.get(i).getDias() + " días, " + capActual.get(i) + "/" + trans.get(i).getPesomax() + "kg, " + trans.get(i).getPrecio() + " €/kg \n");
 		}
-		return resultado;
-		//GRAN CHAPUZA. ARREGLAR PER FER UN TOSTRING DIGNE
+		return resultado.toString();
 	}
 	
 	public double getCapActualOferta(int i) {
