@@ -51,44 +51,55 @@ public class AzamonEstado {
 
 				if (j == 0 && trans.get(i).getDias() == 1) {
 
-                    while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size()) {
+                    while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size() && paq.get(npaq).getPrioridad() == 0) {
                         if (!asignados.get(npaq) && capActual.get(i)+paq.get(npaq).getPeso() <= trans.get(i).getPesomax()) {
                             asignacion.set(npaq, i);
                             asignados.set(npaq, true);
                             capActual.set(i, capActual.get(i)+paq.get(npaq).getPeso());
-                            //System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
+                            System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
                         }
-                        //else System.out.println("Paquete ya asignado :) \n");
+                        else {
+                        	if (asignados.get(npaq)) System.out.println("Paquete "+npaq+" ya asignado :) \n");
+                        	else System.out.println("El paquete "+npaq+" no cabe :( \n");
+                        }
+                        npaq++;
                     }
                 }
 				if (j == 1 && trans.get(i).getDias() <= 3) {
-					while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size()) {
+					while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size() && paq.get(npaq).getPrioridad() <= 1) {
 						if(!asignados.get(npaq) && capActual.get(i)+paq.get(npaq).getPeso() <= trans.get(i).getPesomax()) {
 							asignacion.set(npaq, i);
 							asignados.set(npaq, true);
                             capActual.set(i, capActual.get(i)+paq.get(npaq).getPeso());
-                           // System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
+                            System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
 						}
-                        npaq++;
-                        //else System.out.println("Paquete ya asignado :) \n");
+						 else {
+	                        	if (asignados.get(npaq)) System.out.println("Paquete "+npaq+" ya asignado :) \n");
+	                        	else System.out.println("El paquete "+npaq+" no cabe :( \n");
+	                        }
+						npaq++;
 					}
 				}
 				
 				if (j == 2 && trans.get(i).getDias() <= 5) {
-                    while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size()) {
+                    while (capActual.get(i) < trans.get(i).getPesomax() && npaq < paq.size() && paq.get(npaq).getPrioridad() <= 2) {
                         if (!asignados.get(npaq) && capActual.get(i)+paq.get(npaq).getPeso() <= trans.get(i).getPesomax()) {
                             asignacion.set(npaq, i);
                             asignados.set(npaq, true);
                             capActual.set(i, capActual.get(i)+paq.get(npaq).getPeso());
-                            //System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
+                            System.out.println("Paquete " + npaq + " a oferta " + i + "\n");
+                        }
+                        else {
+                        	if (asignados.get(npaq)) System.out.println("Paquete "+npaq+" ya asignado :) \n");
+                        	else System.out.println("El paquete "+npaq+" no cabe :( \n");
                         }
                         npaq++;
-                        //else System.out.println("Paquete ya asignado :) \n");
                     }
                 }
+				npaq = 0;
 				
 			}
-            npaq = 0;
+            
 		}
 	}
 
