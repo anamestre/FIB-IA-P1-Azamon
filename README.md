@@ -2,7 +2,7 @@
 
 ## To do
 
-*Començar a implementar classes de l'AIMA
+* Començar a implementar classes de l'AIMA
 
 ## Explicacions
 
