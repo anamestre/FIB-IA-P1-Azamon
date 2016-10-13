@@ -2,7 +2,6 @@
 
 ## To do
 
-
-*Fer generació de la solució inicial 2
+TENIM LES DUES SOLUCIONS! wiiiiiiiiiiiii.
 
 *Començar a implementar classes de l'AIMA

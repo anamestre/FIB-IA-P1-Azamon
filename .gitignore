@@ -1,3 +1,5 @@
 /bin/
 /.directory
 /lib/javadoc/
+/nbproject/private/
+/build/
