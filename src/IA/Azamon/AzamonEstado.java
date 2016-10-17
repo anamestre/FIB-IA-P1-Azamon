@@ -11,6 +11,10 @@ public class AzamonEstado {
     private ArrayList<Double> capActual; //capacidad actual de cada oferta
     private double precio;
 
+    public double getPrecio() {
+        return precio;
+    }
+
     public AzamonEstado(int npaq, int seedpaq, double proporcion, int seedtrans) {
         asignacion = new ArrayList<Integer>(npaq);
         for (int i = 0; i < npaq; i++) {
@@ -22,6 +26,14 @@ public class AzamonEstado {
         for (int i = 0; i < trans.size(); i++) {
             capActual.add(0.0);
         }
+    }
+    
+    public AzamonEstado(AzamonEstado estat){
+        paq = estat.paq;
+        trans = estat.trans;
+        asignacion = estat.asignacion;
+        capActual = estat.capActual;
+        precio = estat.precio;
     }
 
 	//Métodos
