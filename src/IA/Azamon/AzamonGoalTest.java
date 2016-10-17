@@ -6,5 +6,4 @@ public class AzamonGoalTest implements GoalTest {
 		AzamonEstado estat = (AzamonEstado) aState;
 		return (estat.isGoalState());
 	}
-
 }
