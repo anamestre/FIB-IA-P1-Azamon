@@ -10,7 +10,7 @@ public class AzamonProblem {
 	
 	public static void main(String[] args) {
 		AzamonEstado estat = new AzamonEstado(100, 1234, 1.2, 1234);
-		//AzamonHillClimbingSearch(estat);
+		AzamonHillClimbingSearch(estat);
 		//AzamonSimulatedAnnealingSearch();
 	}
 	
@@ -19,6 +19,8 @@ public class AzamonProblem {
 			Problem problem = new Problem(estat, new AzamonSuccessorFunction(), new AzamonGoalTest(), new AzamonHeuristicFunction1());
 			Search search = new HillClimbingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
+                        
+                        
 		}
 		catch (Exception e) {
 			e.printStackTrace();
