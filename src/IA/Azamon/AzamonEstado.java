@@ -9,6 +9,7 @@ public class AzamonEstado {
     static Transporte trans;
     private ArrayList<Integer> asignacion;
     private ArrayList<Double> capActual; //capacidad actual de cada oferta
+    private double precio;
 
     public AzamonEstado(int npaq, int seedpaq, double proporcion, int seedtrans) {
         asignacion = new ArrayList<Integer>(npaq);
@@ -26,6 +27,19 @@ public class AzamonEstado {
 	//Métodos
     public boolean isGoalState() {
         return false;
+    }
+    
+    public void calculaPrecio(){
+        precio = 0.0;
+        for(int i = 0; i < asignacion.size(); ++i){
+            precio += trans.get(asignacion.get(i)).getPrecio()*paq.get(i).getPeso();
+            if(trans.get(asignacion.get(i)).getDias() == 5){
+                precio += 0.5*paq.get(i).getPeso();
+            }
+            else if(trans.get(asignacion.get(i)).getDias() >= 3){
+                precio += 0.25*paq.get(i).getPeso();
+            }
+        }
     }
 
     public void generaSolInicial1() {
@@ -108,6 +122,7 @@ public class AzamonEstado {
             }
 
         }
+        calculaPrecio();
     }
 
     public boolean prioritatCorrecta(int dia, int priori){
@@ -152,13 +167,37 @@ public class AzamonEstado {
             }
             npaq = 0;
         }
+        calculaPrecio();
         
+    }
+    
+   
+    public void restaPrecio(int p){
+        precio -= trans.get(asignacion.get(p)).getPrecio()*paq.get(p).getPeso();
+        if(trans.get(asignacion.get(p)).getDias() == 5){
+                precio -= 0.5*paq.get(p).getPeso();
+            }
+            else if(trans.get(asignacion.get(p)).getDias() >= 3){
+                precio -= 0.25*paq.get(p).getPeso();
+            }
+    }
+    
+     public void sumaPrecio(int p){
+        precio += trans.get(asignacion.get(p)).getPrecio()*paq.get(p).getPeso();
+        if(trans.get(asignacion.get(p)).getDias() == 5){
+                precio += 0.5*paq.get(p).getPeso();
+            }
+            else if(trans.get(asignacion.get(p)).getDias() >= 3){
+                precio += 0.25*paq.get(p).getPeso();
+            }
     }
     
     public boolean moverPaquete(int p, int o) {
         if (capActual.get(o) + paq.get(p).getPeso() <= trans.get(o).getPesomax()) {
+            restaPrecio(p);
             capActual.set(o, capActual.get(o) + paq.get(p).getPeso());
             asignacion.set(p, o);
+            sumaPrecio(p);
             return true;
         }
         return false;
@@ -171,10 +210,14 @@ public class AzamonEstado {
         int o2 = asignacion.get(p2);
         if (capActual.get(o1) + paq.get(p2).getPeso() - paq.get(p1).getPeso() <= trans.get(o1).getPesomax()
                 && capActual.get(o2) + paq.get(p1).getPeso() - paq.get(p2).getPeso() <= trans.get(o2).getPesomax()) {
+            restaPrecio(p1);
+            restaPrecio(p2);
             capActual.set(o1, capActual.get(o1) + paq.get(p2).getPeso() - paq.get(p1).getPeso());
             capActual.set(o2, capActual.get(o2) + paq.get(p1).getPeso() - paq.get(p2).getPeso());
             asignacion.set(p1, o2);
             asignacion.set(p2, o1);
+            sumaPrecio(p1);
+            sumaPrecio(p2);
             return true;
         }
         return false;
@@ -185,12 +228,14 @@ public class AzamonEstado {
         if (capActual.get(o) + paq.get(p).getPeso() <= trans.get(o).getPesomax()) {
             capActual.set(o, capActual.get(o) + paq.get(p).getPeso());
             asignacion.set(p, o);
+            sumaPrecio(p);
             return true;
         }
         return false;
     }
 
     public void quitarPaquete(int p) {
+        restaPrecio(p);
         int o = asignacion.get(p);
         capActual.set(o, capActual.get(o) - paq.get(p).getPeso());
         asignacion.set(p, -1);
