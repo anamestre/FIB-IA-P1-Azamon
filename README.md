@@ -6,8 +6,8 @@
 	* AzamonHeuristicFunction1: heurístic que té en compte minimització de costos d'emmagatzematge i transport.
 	* AzamonHeuristicFunction2: heurístic que té en compte, a més dels factors del primer heurístic, la felicitat dels consumidors (dies de diferència amb què ha arribat un paquet).
 	* AzamonProblem: classe "gestora" de les cerques per HC i SA (cal implementar impressió dels resultats).
-	*AzamonSuccessorFunction: classe generadora dels estats successors.
-	*AzamonGoalTest: **IMPLEMENTADA**
+	* AzamonSuccessorFunction: classe generadora dels estats successors.
+	* AzamonGoalTest: **IMPLEMENTADA**
 
 ## Explicacions
 
