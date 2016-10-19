@@ -2,12 +2,17 @@
 
 ## To do
 
-* Començar a implementar classes de l'AIMA
-	* AzamonHeuristicFunction1: heurístic que té en compte minimització de costos d'emmagatzematge i transport.
-	* AzamonHeuristicFunction2: heurístic que té en compte, a més dels factors del primer heurístic, la felicitat dels consumidors (dies de diferència amb què ha arribat un paquet).
-	* AzamonProblem: classe "gestora" de les cerques per HC i SA (cal implementar impressió dels resultats).
-	* AzamonSuccessorFunction: classe generadora dels estats successors.
+* Acabar d'implementar les classes de l'AIMA
+	* AzamonHeuristicFunction1: **IMPLEMENTADA**
+	* AzamonHeuristicFunction2: estamos en ello
+	* AzamonProblem:
+		* Part de Hill Climbing: **IMPLEMENTADA**
+		* Part de Simulated Annealing: per implementar
+	* AzamonSuccessorFunction:
+		* Versió moure/permutar: **IMPLEMENTADA**
+		* Versió afegir/treure: per implementar
 	* AzamonGoalTest: **IMPLEMENTADA**
+* Fer els experiments **IMPORTANT L'EXPERIMENT ESPECIAL**
 
 ## Explicacions
 
