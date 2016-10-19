@@ -5,28 +5,31 @@ import aima.search.framework.Successor;
 import aima.search.framework.SuccessorFunction;
 
 public class AzamonSuccessorFunction implements SuccessorFunction {
-	
+
 	public List getSuccessors(Object aState) {
-		ArrayList<Successor> retVal = new ArrayList();
-                AzamonEstado estat = (AzamonEstado) aState;
-                for(int i = 0; i < estat.paq.size(); ++i){
-                    for(int j = 0; j < estat.trans.size(); ++j){
-                        AzamonEstado nouEstat = new AzamonEstado(estat);
-                        if(nouEstat.moverPaquete(i, j)){
-                            StringBuffer S = new StringBuffer();
-                            S.append("movido paquete "+i+ " a oferta "+j+"\n");
-                            retVal.add(new Successor(S.toString(), nouEstat));
-                        }
-                    }
-                    for(int j = i +1; j < estat.paq.size() -1; ++j){
-                        AzamonEstado nouEstat = new AzamonEstado(estat);
-                        if(nouEstat.permutarPaquetes(i, j)){
-                            StringBuffer S = new StringBuffer();
-                            S.append("permutados paquetes "+i+ " y "+j+"\n");
-                            retVal.add(new Successor(S.toString(), nouEstat));
-                        }
-                    }
-                }
+		ArrayList<Successor> retVal = new ArrayList<>();
+		AzamonEstado estat = (AzamonEstado) aState;
+		//System.out.print(estat.capActualToString());
+		for(int i = 0; i < estat.paq.size(); ++i){
+			//System.out.print("It "+i+ " - "+estat.getPrecio()+" - "+estat.capActualToString());
+			for(int j = 0; j < estat.trans.size(); ++j){
+				AzamonEstado nouEstat = new AzamonEstado(estat);
+				if(nouEstat.moverPaquete(i, j)){
+					StringBuffer S = new StringBuffer();
+					S.append("movido paquete "+i+ " a oferta "+j+"\n");
+					retVal.add(new Successor(S.toString(), nouEstat));
+				}
+			}
+			for(int j = i +1; j < estat.paq.size() -1; ++j){
+				AzamonEstado nouEstat = new AzamonEstado(estat);
+				if(nouEstat.permutarPaquetes(i, j)){
+					StringBuffer S = new StringBuffer();
+					S.append("permutados paquetes "+i+ " y "+j+"\n");
+					retVal.add(new Successor(S.toString(), nouEstat));
+				}
+			}
+		}
+		//System.out.print(estat.getPrecio()+" - "+estat.capActualToString());
 		return retVal;
 	}
 
