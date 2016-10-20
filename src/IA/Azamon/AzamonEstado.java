@@ -10,6 +10,11 @@ public class AzamonEstado {
     private ArrayList<Integer> asignacion;
     private ArrayList<Double> capActual; //capacidad actual de cada oferta
     private double precio;
+    private int felicidad;
+
+    public int getFelicidad() {
+        return felicidad;
+    }
 
     public double getPrecio() {
         return precio;
@@ -26,6 +31,8 @@ public class AzamonEstado {
         for (int i = 0; i < trans.size(); i++) {
             capActual.add(0.0);
         }
+        felicidad = 0;
+        precio = 0.0;
     }
     
     public AzamonEstado(AzamonEstado estat){
@@ -102,6 +109,92 @@ public class AzamonEstado {
                 precio += 0.25*paq.get(i).getPeso();
             }
         }
+    }
+    
+    public void calculaFelicidad() {
+        
+        for (int i = 0; i < asignacion.size(); i++) {
+            int prioPaq = paq.get(i).getPrioridad();
+            int diasOf = trans.get(asignacion.get(i)).getDias();
+            if (prioPaq == 1 && diasOf == 1)  felicidad++;
+            else if (prioPaq == 2) {
+                if (diasOf == 3) felicidad++;
+                else if (diasOf == 2) felicidad += 2;
+                else if (diasOf == 1) felicidad += 3;
+            }
+        }
+    }
+    
+    public void actFelicidad(int p, int od) {
+        int prioPaq = paq.get(p).getPrioridad();
+        int diasOfD = trans.get(od).getDias();
+        int ofPaq = asignacion.get(p);
+        if (ofPaq == -1) {
+            if (prioPaq == 1 && diasOfD == 1) {
+                felicidad++;
+            } else if (prioPaq == 2) {
+                if (diasOfD == 3) {
+                    felicidad++;
+                } else if (diasOfD == 2) {
+                    felicidad += 2;
+                } else if (diasOfD == 1) {
+                    felicidad += 3;
+                }
+            }
+        } else {
+            int diasOf = trans.get(ofPaq).getDias();
+
+            if (prioPaq == 1 && diasOfD == 1 && diasOf != 1) {
+                felicidad++;
+            } else if (prioPaq == 1 && diasOfD != 1 && diasOf == 1) {
+                felicidad--;
+            } else if (prioPaq == 2) {
+                if (diasOf == 1) {
+                    if (diasOfD > 3) {
+                        felicidad -= 3;
+                    } else if (diasOfD == 3) {
+                        felicidad -= 2;
+                    } else if (diasOfD == 2) {
+                        felicidad--;
+                    }
+                } else if (diasOf == 2) {
+                    if (diasOfD > 3) {
+                        felicidad -= 2;
+                    } else if (diasOfD == 3) {
+                        felicidad--;
+                    } else if (diasOfD == 1) {
+                        felicidad++;
+                    }
+                } else if (diasOf == 3) {
+                    if (diasOfD > 3) {
+                        felicidad--;
+                    } else if (diasOfD == 2) {
+                        felicidad++;
+                    } else if (diasOfD == 1) {
+                        felicidad += 2;
+                    }
+                } else {
+                    if (diasOfD == 3) {
+                        felicidad++;
+                    } else if (diasOfD == 2) {
+                        felicidad += 2;
+                    } else if (diasOfD == 1) {
+                        felicidad += 3;
+                    }
+                }
+            }
+        }
+    }
+    
+    public void restaFelicidad(int p) {
+         int prioPaq = paq.get(p).getPrioridad();
+         int diasOf = trans.get(asignacion.get(p)).getDias();
+         if (prioPaq == 1 && diasOf == 1) felicidad--;
+         else if (prioPaq == 2) {
+             if (diasOf == 3) felicidad--;
+             else if (diasOf == 2) felicidad -= 2;
+             else if (diasOf == 1) felicidad -= 3;
+         }
     }
 
     public void generaSolInicial1() {
@@ -185,6 +278,7 @@ public class AzamonEstado {
 
         }
         calculaPrecio();
+        calculaFelicidad();
     }
 
     public boolean prioritatCorrecta(int dia, int priori){
@@ -230,6 +324,7 @@ public class AzamonEstado {
             npaq = 0;
         }
         calculaPrecio();
+        calculaFelicidad();
         
     }
     
@@ -260,6 +355,7 @@ public class AzamonEstado {
         	restaPrecio(p);
         	capActual.set(asignacion.get(p), capActual.get(asignacion.get(p))-paq.get(p).getPeso());
             capActual.set(o, capActual.get(o) + paq.get(p).getPeso());
+            actFelicidad(p, o);
             asignacion.set(p, o);
             sumaPrecio(p);
             return true;
@@ -280,7 +376,9 @@ public class AzamonEstado {
         		restaPrecio(p2);
         		capActual.set(o1, capActual.get(o1) + paq.get(p2).getPeso() - paq.get(p1).getPeso());
         		capActual.set(o2, capActual.get(o2) + paq.get(p1).getPeso() - paq.get(p2).getPeso());
-        		asignacion.set(p1, o2);
+        		actFelicidad(p1, o2);
+                        actFelicidad(p2, o1);
+                        asignacion.set(p1, o2);
         		asignacion.set(p2, o1);
         		sumaPrecio(p1);
         		sumaPrecio(p2);
@@ -294,6 +392,7 @@ public class AzamonEstado {
     public boolean anadirPaquete(int p, int o) {
         if (capActual.get(o) + paq.get(p).getPeso() <= trans.get(o).getPesomax()) {
             capActual.set(o, capActual.get(o) + paq.get(p).getPeso());
+            actFelicidad(p, o);
             asignacion.set(p, o);
             sumaPrecio(p);
             return true;
@@ -305,8 +404,8 @@ public class AzamonEstado {
         restaPrecio(p);
         int o = asignacion.get(p);
         capActual.set(o, capActual.get(o) - paq.get(p).getPeso());
+        restaFelicidad(p);
         asignacion.set(p, -1);
-
     }
 
     public int hashFunction() {
@@ -330,6 +429,7 @@ public class AzamonEstado {
             resultado.append("Oferta " + i + ": " + trans.get(i).getDias() + " días, " + capActual.get(i) + "/" + trans.get(i).getPesomax() + "kg, " + trans.get(i).getPrecio() + " €/kg \n");
         }
         resultado.append("PRECIO: "+precio+"\n");
+        resultado.append("FELICIDAD: "+felicidad+"\n");
         return resultado.toString();
     }
 

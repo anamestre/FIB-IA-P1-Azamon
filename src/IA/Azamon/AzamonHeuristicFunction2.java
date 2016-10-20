@@ -9,7 +9,7 @@ import aima.search.framework.HeuristicFunction;
 // Aquest valora els costos-felicitat.
 public class AzamonHeuristicFunction2 implements HeuristicFunction {
 	private ArrayList<Double> pes_restant;
-	private ArrayList<Double> paq_prior2;
+	//private ArrayList<Double> paq_prior2;
 	ArrayList<Pair> paq_dies = new ArrayList<Pair>();  
 	public double getHeuristicValue(Object state) {
 			AzamonEstado estat = (AzamonEstado) state;
@@ -17,10 +17,10 @@ public class AzamonHeuristicFunction2 implements HeuristicFunction {
 			//pes_restant => pes restant de totes les ofertes ordenades de 1..n
 			//ara volem saber per un paquet, en quants dies s'entregara
 			paq_dies = estat.paq_dies();
-			//paq_dies => la primera posicio es el nº de paquet, la segona posicio es els dies que s'entrega
+			//paq_dies => la primera posicio es el num. de paquet, la segona posicio es els dies que s'entrega
 			//ara ordenem per quants dies d'entrega, de menor a major
 			Collections.sort(paq_dies);
-			//paq_dies ordenat començant per el menor dia d'entrega
+			//paq_dies ordenat comenÃ§ant per el menor dia d'entrega
 			double preu_actual, pes_paquet = 0;
 			int paquet = 0;
 			for(int j = 2; j < 6; ++j) {
@@ -32,7 +32,7 @@ public class AzamonHeuristicFunction2 implements HeuristicFunction {
 						if(j == 3 || j == 4) preu_actual = preu_actual + pes_paquet * 0.25;
 						else if(j == 5) preu_actual = preu_actual + pes_paquet * 0.5;
 						//ja tenim el preu total que ens costa en l'oferta ACTUAL
-						double pespreu_nova = 0;
+						double pespreu_nova = 0.0;
 						int k = (estat.comparar_ofertes(preu_actual, pes_paquet, j));
 						boolean a = false; //per quan trobi una oferta que costi menys que l'actual
 						if (k != 0) estat.modificar_capac(paquet, pes_paquet, k);	
