@@ -41,6 +41,56 @@ public class AzamonEstado {
         return false;
     }
     
+    public ArrayList<Double> kg_restants() {
+    	ArrayList<Double> kg_restants = new ArrayList<Double>();
+    	for(int i = 1; i < capActual.size(); ++i){ 
+    		kg_restants.set(i, trans.get(i).getPesomax() - capActual.get(i));
+    	}
+    	return kg_restants;
+    }
+    
+    public ArrayList<Pair> paq_dies() {
+    	int oferta;
+    	ArrayList<Pair> paq_dies = new ArrayList<Pair>(); 
+    	for(int j = 1; j < asignacion.size(); ++j) {
+			oferta = asignacion.get(j);
+			Pair pair = new Pair(j, trans.get(oferta).getDias());
+			paq_dies.add(pair);
+		}
+    	return paq_dies;
+    }
+    
+    public double pes_paquet(int paquet) {
+    	return paq.get(paquet).getPeso();
+    }
+    
+    public double preu_oferta_paquet(int paquet) {
+    	return trans.get(asignacion.get(paquet)).getPrecio();
+    }
+    
+    public int comparar_ofertes(double preu_actual, double pes_paquet, int j) {
+    	boolean oferta_trobada = false;
+    	double pespreu_nova;
+    	for(int k = 0; k < capActual.size() && !oferta_trobada; ++k) {
+			if(capActual.get(k) > pes_paquet && trans.get(k).getDias() == j-1) {
+				pespreu_nova = trans.get(k).getPrecio() * pes_paquet;
+				if(j-1 == 1) pespreu_nova = pespreu_nova + 2; //afegim nosaltres 2 al preu
+				else if(j-1 == 2 || j -1 == 3 ) pespreu_nova = pespreu_nova - pes_paquet * 0.25;
+				else if(j-1 == 5) pespreu_nova = pespreu_nova - pes_paquet * 0.5;
+					if(preu_actual > pespreu_nova) return k;
+			}
+    	}
+    	return 0;
+    }
+    
+    public void modificar_capac(int paquet, double pes_paquet, int oferta) {
+    	capActual.set(oferta, pes_paquet + capActual.get(oferta));
+    	int oferta_anterior = asignacion.get(paquet);
+    	capActual.set(oferta_anterior, capActual.get(oferta_anterior) - pes_paquet );
+    	capActual.set(paquet, capActual.get(paquet) - pes_paquet);
+    	asignacion.set(paquet, oferta);
+    }
+    
     public void calculaPrecio(){
         precio = 0.0;
         for(int i = 0; i < asignacion.size(); ++i){
@@ -242,8 +292,7 @@ public class AzamonEstado {
     }
 
     public boolean anadirPaquete(int p, int o) {
-        if (capActual.get(o) + paq.get(p).getPeso() <= trans.get(o).getPesomax()
-        		&& prioritatCorrecta(trans.get(o).getDias(), paq.get(p).getPrioridad())) {
+        if (capActual.get(o) + paq.get(p).getPeso() <= trans.get(o).getPesomax()) {
             capActual.set(o, capActual.get(o) + paq.get(p).getPeso());
             asignacion.set(p, o);
             sumaPrecio(p);
@@ -301,6 +350,7 @@ public class AzamonEstado {
     	resultado.append("\n");
     	return resultado.toString();
     }
+    
     
     public String correspondenciasToString() {
     	StringBuffer resultado = new StringBuffer();
