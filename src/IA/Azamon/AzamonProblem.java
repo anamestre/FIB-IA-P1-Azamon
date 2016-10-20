@@ -12,7 +12,7 @@ import java.util.Properties;
 public class AzamonProblem {
 	
 	public static void main(String[] args) {
-		AzamonEstado estat = new AzamonEstado(100, 12387, 1.2, 1234);
+		AzamonEstado estat = new AzamonEstado(500, 12387, 1.2, 1234);
 		estat.generaSolInicial1();
 		System.out.print(estat.toString());
 		System.out.print(estat.correspondenciasToString());
