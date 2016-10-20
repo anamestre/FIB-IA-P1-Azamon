@@ -7,10 +7,10 @@
 	* AzamonHeuristicFunction2: estamos en ello
 	* AzamonProblem:
 		* Part de Hill Climbing: **IMPLEMENTADA**
-		* Part de Simulated Annealing: per implementar
+		* Part de Simulated Annealing: **GAIREBÉ IMPLEMENTADA perquè explota imprimint les accions**
 	* AzamonSuccessorFunction:
 		* Versió moure/permutar: **IMPLEMENTADA**
-		* Versió afegir/treure: per implementar
+		* Versió afegir/treure: *preguntar al profe*
 	* AzamonGoalTest: **IMPLEMENTADA**
 * Fer els experiments **IMPORTANT L'EXPERIMENT ESPECIAL**
 

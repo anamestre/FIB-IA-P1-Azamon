@@ -16,13 +16,13 @@ public class AzamonProblem {
 		estat.generaSolInicial1();
 		System.out.print(estat.toString());
 		System.out.print(estat.correspondenciasToString());
-		AzamonHillClimbingSearch(estat);
-		//AzamonSimulatedAnnealingSearch();
+		//AzamonHillClimbingSearch(estat);
+		AzamonSimulatedAnnealingSearch(estat);
 	}
 	
 	private static void AzamonHillClimbingSearch(AzamonEstado estat) {
 		try {
-			Problem problem = new Problem(estat, new AzamonSuccessorFunction2(), new AzamonGoalTest(), new AzamonHeuristicFunction1());
+			Problem problem = new Problem(estat, new AzamonSuccessorFunction(), new AzamonGoalTest(), new AzamonHeuristicFunction1());
 			Search search = new HillClimbingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
                         
@@ -30,6 +30,24 @@ public class AzamonProblem {
             printInstrumentation(agent.getInstrumentation());
             System.out.println("\n"+((AzamonEstado)search.getGoalState()).toString());
             System.out.println("\n"+((AzamonEstado)search.getGoalState()).correspondenciasToString());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void AzamonSimulatedAnnealingSearch(AzamonEstado estat) {
+		try {
+			Problem problem = new Problem(estat, new AzamonSuccessorFunction(), new AzamonGoalTest(), new AzamonHeuristicFunction1());
+			Search search = new SimulatedAnnealingSearch(2000, 100, 5, 0.001);
+			SearchAgent agent = new SearchAgent(problem, search);
+			
+			// printActions(agent.getActions());
+	         //printInstrumentation(agent.getInstrumentation());
+			//explota?????????? màgia!!!
+	         System.out.println("\n"+((AzamonEstado)search.getGoalState()).toString());
+	         System.out.println("\n"+((AzamonEstado)search.getGoalState()).correspondenciasToString());
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
