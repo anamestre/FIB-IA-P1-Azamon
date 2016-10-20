@@ -242,7 +242,8 @@ public class AzamonEstado {
     }
 
     public boolean anadirPaquete(int p, int o) {
-        if (capActual.get(o) + paq.get(p).getPeso() <= trans.get(o).getPesomax()) {
+        if (capActual.get(o) + paq.get(p).getPeso() <= trans.get(o).getPesomax()
+        		&& prioritatCorrecta(trans.get(o).getDias(), paq.get(p).getPrioridad())) {
             capActual.set(o, capActual.get(o) + paq.get(p).getPeso());
             asignacion.set(p, o);
             sumaPrecio(p);

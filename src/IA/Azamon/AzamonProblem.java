@@ -12,7 +12,7 @@ import java.util.Properties;
 public class AzamonProblem {
 	
 	public static void main(String[] args) {
-		AzamonEstado estat = new AzamonEstado(500, 12387, 1.2, 1234);
+		AzamonEstado estat = new AzamonEstado(100, 1285, 1.2, 1123);
 		estat.generaSolInicial1();
 		System.out.print(estat.toString());
 		System.out.print(estat.correspondenciasToString());
@@ -22,7 +22,7 @@ public class AzamonProblem {
 	
 	private static void AzamonHillClimbingSearch(AzamonEstado estat) {
 		try {
-			Problem problem = new Problem(estat, new AzamonSuccessorFunction(), new AzamonGoalTest(), new AzamonHeuristicFunction1());
+			Problem problem = new Problem(estat, new AzamonSuccessorFunction2(), new AzamonGoalTest(), new AzamonHeuristicFunction1());
 			Search search = new HillClimbingSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
                         
