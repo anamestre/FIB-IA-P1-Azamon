@@ -8,28 +8,40 @@ import aima.search.framework.SearchAgent;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.Random;
 
 public class AzamonProblem {
 
     public static void main(String[] args) {
-        AzamonEstado estat = new AzamonEstado(100, 1285, 1.2, 1123);
-        estat.generaSolInicial1();
-        System.out.print(estat.toString());
-        System.out.print(estat.correspondenciasToString());
+    	Random myRandom = new Random();
+    	//Integer seed = myRandom.nextInt(10000);
+    	Integer seed = new Integer(1234);
+    	long t0, t1;
+        AzamonEstado estat = new AzamonEstado(100, seed, 1.2, seed);
+        t0 = System.nanoTime();
+        estat.generaSolInicial2();
+        //System.out.print(estat.toString());
+        //System.out.print(estat.correspondenciasToString());
         AzamonHillClimbingSearch(estat);
+        t1 = System.nanoTime();
+        t0 = t1 - t0;
+        System.out.print("Precio inicial: "+estat.getPrecio()+"\n");
+        System.out.print("Tiempo: "+t0+"\n");
+        System.out.print("Seed: "+seed+"\n");
+        
         //AzamonSimulatedAnnealingSearch(estat);
     }
 
     private static void AzamonHillClimbingSearch(AzamonEstado estat) {
         try {
-            Problem problem = new Problem(estat, new AzamonSuccessorFunction(), new AzamonGoalTest(), new AzamonHeuristicFunction1());
+            Problem problem = new Problem(estat, new AzamonSuccessorFunction2(), new AzamonGoalTest(), new AzamonHeuristicFunction1());
             Search search = new HillClimbingSearch();
             SearchAgent agent = new SearchAgent(problem, search);
 
             printActions(agent.getActions());
             printInstrumentation(agent.getInstrumentation());
             System.out.println("\n" + ((AzamonEstado) search.getGoalState()).toString());
-            System.out.println("\n" + ((AzamonEstado) search.getGoalState()).correspondenciasToString());
+            //System.out.println("\n" + ((AzamonEstado) search.getGoalState()).correspondenciasToString());
         } catch (Exception e) {
             e.printStackTrace();
         }
