@@ -417,7 +417,7 @@ public class AzamonEstado {
     }
 
     public String toString() {
-        StringBuffer resultado = new StringBuffer();
+       /* StringBuffer resultado = new StringBuffer();
         resultado.append("ESTADO DEL ESTADO \n");
         resultado.append("Asignación: \n");
         for (int i = 0; i < asignacion.size(); i++) {
@@ -430,7 +430,13 @@ public class AzamonEstado {
         }
         resultado.append("PRECIO: "+precio+"\n");
         resultado.append("FELICIDAD: "+felicidad+"\n");
+        return resultado.toString();*/
+    	
+    	StringBuffer resultado = new StringBuffer();
+        resultado.append(precio);
         return resultado.toString();
+    	
+    	
     }
 
     public double getCapActualOferta(int i) {

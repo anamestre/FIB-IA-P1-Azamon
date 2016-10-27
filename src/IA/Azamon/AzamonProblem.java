@@ -15,10 +15,10 @@ public class AzamonProblem {
     public static void main(String[] args) {
     	Random myRandom = new Random();
     	//Integer seed = new Integer(4391);
-    	for (int j = 0; j < 10; ++j) {
+    	for (int j = 0; j < 2; ++j) {
     		Integer seed = myRandom.nextInt(10000);
     	for (double i = 1.2; i <= 4.2; i += 0.2) {
-    		//Integer seed = new Integer(6743);
+    		//Integer seed = new Integer(1234);
     		long t0, t1;
     		AzamonEstado estat = new AzamonEstado(100, seed, i, seed);
     		t0 = System.nanoTime();
@@ -32,7 +32,7 @@ public class AzamonProblem {
     		System.out.print(t0+"\n");
     		
     	}
-    	System.out.print("Seed: "+seed+"\n");
+    	System.out.print("Seed: "+seed+"\n\n");
     	}
         //AzamonSimulatedAnnealingSearch(estat);
     }
@@ -44,8 +44,8 @@ public class AzamonProblem {
             SearchAgent agent = new SearchAgent(problem, search);
 
             //printActions(agent.getActions());
-           // printInstrumentation(agent.getInstrumentation());
-            //System.out.println("\n" + ((AzamonEstado) search.getGoalState()).toString());
+            //printInstrumentation(agent.getInstrumentation());
+            System.out.println("\n" + ((AzamonEstado) search.getGoalState()).toString());
             //System.out.println("\n" + ((AzamonEstado) search.getGoalState()).correspondenciasToString());
         } catch (Exception e) {
             e.printStackTrace();
