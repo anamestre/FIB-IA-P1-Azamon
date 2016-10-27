@@ -8,7 +8,13 @@ import aima.search.framework.HeuristicFunction;
 
 // Aquest valora els costos-felicitat.
 public class AzamonHeuristicFunction2 implements HeuristicFunction {
-	private ArrayList<Double> pes_restant;
+	
+	public double getHeuristicValue(Object state) {
+		AzamonEstado estat = (AzamonEstado) state;
+                    return estat.getPrecio()-(double)estat.getFelicidad();
+	}
+	
+	/*private ArrayList<Double> pes_restant;
 	//private ArrayList<Double> paq_prior2;
 	ArrayList<Pair> paq_dies = new ArrayList<Pair>();  
 	public double getHeuristicValue(Object state) {
@@ -39,7 +45,8 @@ public class AzamonHeuristicFunction2 implements HeuristicFunction {
 					}	
 				}
 			} //HA DE RETORNAR DOUBLE LOOOL
-	}		
+	}
+	*/		
 }
 	
 

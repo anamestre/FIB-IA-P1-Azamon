@@ -14,21 +14,26 @@ public class AzamonProblem {
 
     public static void main(String[] args) {
     	Random myRandom = new Random();
-    	//Integer seed = myRandom.nextInt(10000);
-    	Integer seed = new Integer(1234);
-    	long t0, t1;
-        AzamonEstado estat = new AzamonEstado(100, seed, 1.2, seed);
-        t0 = System.nanoTime();
-        estat.generaSolInicial2();
-        //System.out.print(estat.toString());
-        //System.out.print(estat.correspondenciasToString());
-        AzamonHillClimbingSearch(estat);
-        t1 = System.nanoTime();
-        t0 = t1 - t0;
-        System.out.print("Precio inicial: "+estat.getPrecio()+"\n");
-        System.out.print("Tiempo: "+t0+"\n");
-        System.out.print("Seed: "+seed+"\n");
-        
+    	//Integer seed = new Integer(4391);
+    	for (int j = 0; j < 10; ++j) {
+    		Integer seed = myRandom.nextInt(10000);
+    	for (double i = 1.2; i <= 4.2; i += 0.2) {
+    		//Integer seed = new Integer(6743);
+    		long t0, t1;
+    		AzamonEstado estat = new AzamonEstado(100, seed, i, seed);
+    		t0 = System.nanoTime();
+    		estat.generaSolInicial2();
+    		//System.out.print(estat.toString());
+    		//System.out.print(estat.correspondenciasToString());
+    		AzamonHillClimbingSearch(estat);
+    		t1 = System.nanoTime();
+    		t0 = t1 - t0;
+    		//System.out.print("Precio inicial: "+estat.getPrecio()+"\n");
+    		System.out.print(t0+"\n");
+    		
+    	}
+    	System.out.print("Seed: "+seed+"\n");
+    	}
         //AzamonSimulatedAnnealingSearch(estat);
     }
 
@@ -38,9 +43,9 @@ public class AzamonProblem {
             Search search = new HillClimbingSearch();
             SearchAgent agent = new SearchAgent(problem, search);
 
-            printActions(agent.getActions());
-            printInstrumentation(agent.getInstrumentation());
-            System.out.println("\n" + ((AzamonEstado) search.getGoalState()).toString());
+            //printActions(agent.getActions());
+           // printInstrumentation(agent.getInstrumentation());
+            //System.out.println("\n" + ((AzamonEstado) search.getGoalState()).toString());
             //System.out.println("\n" + ((AzamonEstado) search.getGoalState()).correspondenciasToString());
         } catch (Exception e) {
             e.printStackTrace();
