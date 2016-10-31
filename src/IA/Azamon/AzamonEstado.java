@@ -377,8 +377,8 @@ public class AzamonEstado {
         		capActual.set(o1, capActual.get(o1) + paq.get(p2).getPeso() - paq.get(p1).getPeso());
         		capActual.set(o2, capActual.get(o2) + paq.get(p1).getPeso() - paq.get(p2).getPeso());
         		actFelicidad(p1, o2);
-                        actFelicidad(p2, o1);
-                        asignacion.set(p1, o2);
+                actFelicidad(p2, o1);
+                asignacion.set(p1, o2);
         		asignacion.set(p2, o1);
         		sumaPrecio(p1);
         		sumaPrecio(p2);
@@ -417,7 +417,7 @@ public class AzamonEstado {
     }
 
     public String toString() {
-       /* StringBuffer resultado = new StringBuffer();
+        StringBuffer resultado = new StringBuffer();
         resultado.append("ESTADO DEL ESTADO \n");
         resultado.append("Asignación: \n");
         for (int i = 0; i < asignacion.size(); i++) {
@@ -430,10 +430,6 @@ public class AzamonEstado {
         }
         resultado.append("PRECIO: "+precio+"\n");
         resultado.append("FELICIDAD: "+felicidad+"\n");
-        return resultado.toString();*/
-    	
-    	StringBuffer resultado = new StringBuffer();
-        resultado.append(precio);
         return resultado.toString();
     	
     	
