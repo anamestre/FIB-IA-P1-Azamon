@@ -1,18 +1,8 @@
 # Azamon
 
-## To do
-
-* Acabar d'implementar les classes de l'AIMA
-	* AzamonHeuristicFunction1: **IMPLEMENTADA**
-	* AzamonHeuristicFunction2: estamos en ello
-	* AzamonProblem:
-		* Part de Hill Climbing: **IMPLEMENTADA**
-		* Part de Simulated Annealing: **GAIREBÉ IMPLEMENTADA perquè explota imprimint les accions**
-	* AzamonSuccessorFunction:
-		* Versió moure/permutar: **IMPLEMENTADA**
-		* Versió afegir/treure: *preguntar al profe*
-	* AzamonGoalTest: **IMPLEMENTADA**
-* Fer els experiments **IMPORTANT L'EXPERIMENT ESPECIAL**
+## Pràctica 1 de IA: Distribució i entrega de paquets per Azamon.
+* Curs 2016-2017.
+* Ismael Julià, Ana Mestre i Gorka Piñol.
 
 ## Explicacions
 
